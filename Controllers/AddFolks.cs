@@ -8,14 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using api_CSharp.Models;
 
 namespace api_CSharp.Controllers
+namespace api_CSharp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class AddFolks : ControllerBase
     {
-        private readonly TodoContext _context;
+        private readonly AddFolks _context;
 
-        public TodoItemsController(TodoContext context)
+        public AddFolksController(AddFolks context)
         {
             _context = context;
         }
@@ -24,10 +25,10 @@ namespace api_CSharp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
-          if (_context.TodoItems == null)
-          {
-              return NotFound();
-          }
+            if (_context.TodoItems == null)
+            {
+                return NotFound();
+            }
             return await _context.TodoItems.ToListAsync();
         }
 
@@ -35,10 +36,10 @@ namespace api_CSharp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
-          if (_context.TodoItems == null)
-          {
-              return NotFound();
-          }
+            if (_context.TodoItems == null)
+            {
+                return NotFound();
+            }
             var todoItem = await _context.TodoItems.FindAsync(id);
 
             if (todoItem == null)
@@ -85,10 +86,10 @@ namespace api_CSharp.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
-          if (_context.TodoItems == null)
-          {
-              return Problem("Entity set 'TodoContext.TodoItems'  is null.");
-          }
+            if (_context.TodoItems == null)
+            {
+                return Problem("Entity set 'TodoContext.TodoItems'  is null.");
+            }
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 

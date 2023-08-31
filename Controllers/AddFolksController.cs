@@ -5,61 +5,62 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api_CSharp;
 using api_CSharp.Models;
 
 namespace api_CSharp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class AddFolksController : ControllerBase
     {
         private readonly TodoContext _context;
 
-        public TodoItemsController(TodoContext context)
+        public AddFolksController(TodoContext context)
         {
             _context = context;
         }
 
-        // GET: api/TodoItems
+        // GET: api/AddFolks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<AddFolk>>> GetAddFolk()
         {
-          if (_context.TodoItems == null)
+          if (_context.AddFolk == null)
           {
               return NotFound();
           }
-            return await _context.TodoItems.ToListAsync();
+            return await _context.AddFolk.ToListAsync();
         }
 
-        // GET: api/TodoItems/5
+        // GET: api/AddFolks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
+        public async Task<ActionResult<AddFolk>> GetAddFolk(long id)
         {
-          if (_context.TodoItems == null)
+          if (_context.AddFolk == null)
           {
               return NotFound();
           }
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var addFolk = await _context.AddFolk.FindAsync(id);
 
-            if (todoItem == null)
+            if (addFolk == null)
             {
                 return NotFound();
             }
 
-            return todoItem;
+            return addFolk;
         }
 
-        // PUT: api/TodoItems/5
+        // PUT: api/AddFolks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
+        public async Task<IActionResult> PutAddFolk(long id, AddFolk addFolk)
         {
-            if (id != todoItem.Id)
+            if (id != addFolk.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(todoItem).State = EntityState.Modified;
+            _context.Entry(addFolk).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +68,7 @@ namespace api_CSharp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodoItemExists(id))
+                if (!AddFolkExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +81,44 @@ namespace api_CSharp.Controllers
             return NoContent();
         }
 
-        // POST: api/TodoItems
+        // POST: api/AddFolks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public async Task<ActionResult<AddFolk>> PostAddFolk(AddFolk addFolk)
         {
-          if (_context.TodoItems == null)
+          if (_context.AddFolk == null)
           {
-              return Problem("Entity set 'TodoContext.TodoItems'  is null.");
+              return Problem("Entity set 'TodoContext.AddFolk'  is null.");
           }
-            _context.TodoItems.Add(todoItem);
+            _context.AddFolk.Add(addFolk);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction("GetAddFolk", new { id = addFolk.Id }, addFolk);
         }
 
-        // DELETE: api/TodoItems/5
+        // DELETE: api/AddFolks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public async Task<IActionResult> DeleteAddFolk(long id)
         {
-            if (_context.TodoItems == null)
+            if (_context.AddFolk == null)
             {
                 return NotFound();
             }
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
+            var addFolk = await _context.AddFolk.FindAsync(id);
+            if (addFolk == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
+            _context.AddFolk.Remove(addFolk);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TodoItemExists(long id)
+        private bool AddFolkExists(long id)
         {
-            return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.AddFolk?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
